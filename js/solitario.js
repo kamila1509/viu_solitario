@@ -2,9 +2,9 @@
 // Array de palos
 let palos = ["viu", "cua", "hex", "cir"];
 // Array de número de cartas
-//let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 // En las pruebas iniciales solo se trabajará con cuatro cartas por palo:
-let numeros = [9, 10, 11, 12];
+//let numeros = [9, 10, 11, 12];
 
 // paso (top y left) en pixeles de una carta a la siguiente en un mazo
 let paso = 5;
@@ -74,7 +74,8 @@ function comenzarJuego() {
   setContador(contReceptor2, 0);
   setContador(contReceptor3, 0);
   setContador(contReceptor4, 0);
-  setContador(contSobrantes, 0);
+  console.log('mazoInicial', mazoInicial)
+  console.log('mazoSobrante', mazoSobrantes)
 
   // Arrancar el conteo de tiempo
   startTimer();
@@ -192,6 +193,26 @@ function shuffleArray(array) {
 
   return array;
 }
+
+function dividirArrayEnMitad(array) {
+  const longitud = array.length;
+  const puntoMedio = Math.floor(longitud / 2);
+
+  const primeraMitad = array.slice(0, puntoMedio);
+  const segundaMitad = array.slice(puntoMedio);
+
+  return [primeraMitad, segundaMitad];
+}
+function createCard(combinacion) {
+  let card = document.createElement("img");
+    card.style.position = "absolute";
+    card.width = 50;
+    card.height = 70;
+    card.src = "../imagenes/baraja/" + combinacion + ".png";
+    card.alt = combinacion;
+    card.id = combinacion;
+  return card
+}
 function cargarTapeteInicial(numeros) {
   let combinaciones = [];
   // Obtener una combinación aleatoria sin repetir
@@ -205,17 +226,15 @@ function cargarTapeteInicial(numeros) {
   let combinacionAleatoria = shuffleArray(combinaciones);
   combinacionAleatoria = shuffleArray(combinacionAleatoria);
   console.log(combinacionAleatoria);
-  setContador(contInicial, combinacionAleatoria.length);
-  combinacionAleatoria.forEach(function (combinacion, index) {
-    let card = document.createElement("img");
-    card.style.position = "absolute";
+
+ const [barajaInicial, barajaSobrante] = dividirArrayEnMitad(combinacionAleatoria);
+  cargarSobrantes(barajaSobrante)
+  setContador(contInicial, barajaInicial.length);
+  barajaInicial.forEach(function (combinacion, index) {
+    mazoInicial.push(combinacion)
+    let card = createCard(combinacion)
     card.style.top = index * 5 + "px";
     card.style.left = index * 5 + "px";
-    card.width = 50;
-    card.height = 70;
-    card.src = "../imagenes/baraja/" + combinacion + ".png";
-    card.alt = combinacion;
-    card.id = combinacion;
     card.draggable = true;
     card.setAttribute("data-palo", combinacion.split("-")[1]);
     card.setAttribute("data-numero", combinacion.split("-")[0]);
@@ -224,9 +243,25 @@ function cargarTapeteInicial(numeros) {
 
     tapeteInicial.appendChild(card);
   });
-  return combinacionAleatoria;
+  return barajaInicial;
 } // cargarTapeteInicial
 
+function cargarSobrantes(baraja) {
+  setContador(contSobrantes, baraja.length);
+  baraja.forEach(function (combinacion, ) {
+    mazoSobrantes.push(combinacion)
+    let card = createCard(combinacion)
+    card.style.top = 25 + "px";
+    card.style.left = 25 + "px";
+    card.draggable = true;
+    card.setAttribute("data-palo", combinacion.split("-")[1]);
+    card.setAttribute("data-numero", combinacion.split("-")[0]);
+    card.addEventListener("dragstart", dragStart);
+    card.addEventListener("dragend", dragEnd);
+
+    tapeteSobrantes.appendChild(card);
+  });
+}
 /**
  	Esta función debe incrementar el número correspondiente al contenido textual
    	del elemento que actúa de contador
@@ -298,11 +333,13 @@ function drop(event) {
   event.target.classList.remove("drag-over");
   let cardId = event.dataTransfer.getData("text/plain");
   let card = document.getElementById(cardId);
+  console.log(card)
 
   if (event.target.id.includes("receptor")) {
+    console.log('entroooo')
     mazoReceptor1.push(cardId);
-    card.style.left = 10 + "px";
-    card.style.top = 10 + "px";
+    card.style.left = 25 + "px";
+    card.style.top = 25 + "px";
     let lastCard = event.target.lastElementChild;
     // Obtener el z-index de la última carta
     let lastCardIndex = lastCard ? parseInt(lastCard.style.zIndex, 10) : 0;
