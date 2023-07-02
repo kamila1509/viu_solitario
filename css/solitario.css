@@ -70,7 +70,7 @@ div.tapete:not(#inicial){
 }
 
 /* Color de fondo para el tapete de las cartas sobrantes */
-div.tapete#sobrantes{
+div.tapete#sobrantes_receptor{
 	background-color: lightblue;
 }
 

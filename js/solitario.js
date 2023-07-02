@@ -11,7 +11,7 @@ let paso = 5;
 
 // Tapetes
 let tapeteInicial = document.getElementById("inicial");
-let tapeteSobrantes = document.getElementById("sobrantes");
+let tapeteSobrantes = document.getElementById("sobrantes_receptor");
 let tapeteReceptor1 = document.getElementById("receptor1");
 let tapeteReceptor2 = document.getElementById("receptor2");
 let tapeteReceptor3 = document.getElementById("receptor3");
@@ -25,9 +25,18 @@ let mazoReceptor2 = [];
 let mazoReceptor3 = [];
 let mazoReceptor4 = [];
 
+let mazos = {
+  'inicial': mazoInicial,
+  'sobrantes_receptor': mazoSobrantes,
+  'receptor1': mazoReceptor1,
+  'receptor2': mazoReceptor2,
+  'receptor3': mazoReceptor3,
+  'receptor4': mazoReceptor4
+};
+console.log('MAZOS',mazos['inicial'])
 // Contadores de cartas
 let contInicial = document.getElementById("contador_inicial");
-let contSobrantes = document.getElementById("contador_sobrantes");
+let contSobrantes = document.getElementById("contador_sobrantes_receptor");
 let contReceptor1 = document.getElementById("contador_receptor1");
 let contReceptor2 = document.getElementById("contador_receptor2");
 let contReceptor3 = document.getElementById("contador_receptor3");
@@ -50,7 +59,6 @@ comenzarJuego();
 
 // Desarrollo del comienzo de juego
 function comenzarJuego() {
-  
   /* Crear baraja, es decir crear el mazoInicial. Este será un array cuyos 
 	elementos serán elementos HTML <img>, siendo cada uno de ellos una carta.
 	Sugerencia: en dos bucles for, bárranse los "palos" y los "numeros", formando
@@ -63,10 +71,13 @@ function comenzarJuego() {
 
   // Barajar y dejar mazoInicial en tapete inicial
   cargarTapeteInicial(numeros);
-  setEvents('receptor1')
-  setEvents('receptor2')
-  setEvents('receptor3')
-  setEvents('receptor4')
+  setEvents("receptor1");
+  setEvents("receptor2");
+  setEvents("receptor3");
+  setEvents("receptor4");
+  setEvents("receptor4");
+  setEvents("sobrantes_receptor");
+  console.log('MAZOS',mazos['inicial'])
   /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
 
   // Puesta a cero de contadores de mazos
@@ -74,8 +85,9 @@ function comenzarJuego() {
   setContador(contReceptor2, 0);
   setContador(contReceptor3, 0);
   setContador(contReceptor4, 0);
-  console.log('mazoInicial', mazoInicial)
-  console.log('mazoSobrante', mazoSobrantes)
+  setContador(contSobrantes, 0);
+  console.log("mazoInicial", mazoInicial);
+  console.log("mazoSobrante", mazoSobrantes);
 
   // Arrancar el conteo de tiempo
   startTimer();
@@ -205,13 +217,13 @@ function dividirArrayEnMitad(array) {
 }
 function createCard(combinacion) {
   let card = document.createElement("img");
-    card.style.position = "absolute";
-    card.width = 50;
-    card.height = 70;
-    card.src = "../imagenes/baraja/" + combinacion + ".png";
-    card.alt = combinacion;
-    card.id = combinacion;
-  return card
+  card.style.position = "absolute";
+  card.width = 50;
+  card.height = 70;
+  card.src = "../imagenes/baraja/" + combinacion + ".png";
+  card.alt = combinacion;
+  card.id = combinacion;
+  return card;
 }
 function cargarTapeteInicial(numeros) {
   let combinaciones = [];
@@ -226,13 +238,13 @@ function cargarTapeteInicial(numeros) {
   let combinacionAleatoria = shuffleArray(combinaciones);
   combinacionAleatoria = shuffleArray(combinacionAleatoria);
   console.log(combinacionAleatoria);
-
- const [barajaInicial, barajaSobrante] = dividirArrayEnMitad(combinacionAleatoria);
-  cargarSobrantes(barajaSobrante)
+  let barajaInicial = combinacionAleatoria;
+  //const [barajaInicial, barajaSobrante] = dividirArrayEnMitad(combinacionAleatoria);
+  //cargarSobrantes(barajaSobrante)
   setContador(contInicial, barajaInicial.length);
   barajaInicial.forEach(function (combinacion, index) {
-    mazoInicial.push(combinacion)
-    let card = createCard(combinacion)
+    mazoInicial.push(combinacion);
+    let card = createCard(combinacion);
     card.style.top = index * 5 + "px";
     card.style.left = index * 5 + "px";
     card.draggable = true;
@@ -246,27 +258,28 @@ function cargarTapeteInicial(numeros) {
   return barajaInicial;
 } // cargarTapeteInicial
 
-function cargarSobrantes(baraja) {
-  setContador(contSobrantes, baraja.length);
-  baraja.forEach(function (combinacion, ) {
-    mazoSobrantes.push(combinacion)
-    let card = createCard(combinacion)
-    card.style.top = 25 + "px";
-    card.style.left = 25 + "px";
-    card.draggable = true;
-    card.setAttribute("data-palo", combinacion.split("-")[1]);
-    card.setAttribute("data-numero", combinacion.split("-")[0]);
-    card.addEventListener("dragstart", dragStart);
-    card.addEventListener("dragend", dragEnd);
+// function cargarSobrantes(baraja) {
+//   setContador(contSobrantes, baraja.length);
+//   baraja.forEach(function (combinacion, ) {
+//     mazoSobrantes.push(combinacion)
+//     let card = createCard(combinacion)
+//     card.style.top = 25 + "px";
+//     card.style.left = 25 + "px";
+//     card.draggable = true;
+//     card.setAttribute("data-palo", combinacion.split("-")[1]);
+//     card.setAttribute("data-numero", combinacion.split("-")[0]);
+//     card.addEventListener("dragstart", dragStart);
+//     card.addEventListener("dragend", dragEnd);
 
-    tapeteSobrantes.appendChild(card);
-  });
-}
+//     tapeteSobrantes.appendChild(card);
+//   });
+// }
 /**
  	Esta función debe incrementar el número correspondiente al contenido textual
    	del elemento que actúa de contador
 */
-function incContador(contador) {
+function incContador(contador, baraja) {
+  setContador(contador, baraja.length);
   /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
 } // incContador
 
@@ -274,6 +287,7 @@ function incContador(contador) {
 	Idem que anterior, pero decrementando 
 */
 function decContador(contador) {
+  setContador(contador, baraja.length);
   /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! ***/
 } // decContador
 
@@ -302,28 +316,37 @@ function setEvents(containers) {
 
 // Función para el evento dragstart
 function dragStart(event) {
+  console.log('dragStart')
   event.dataTransfer.setData("text/plain", event.target.id);
   event.target.classList.add("dragging");
-}
-
-// Función para el evento dragend
-function dragEnd(event) {
-  event.target.classList.remove("dragging");
-}
-
-// Función para el evento dragover
-function dragOver(event) {
-  event.preventDefault();
 }
 
 // Función para el evento dragenter
 function dragEnter(event) {
   event.preventDefault();
+  console.log('dragEnter')
   event.target.classList.add("drag-over");
+}
+// Función para el evento dragover
+function dragOver(event) {
+  console.log('dragOver')
+  event.preventDefault();
 }
 
 // Función para el evento dragleave
 function dragLeave(event) {
+  console.log('dragLeave')
+  event.target.classList.remove("drag-over");
+}
+// Función para el evento dragend
+function dragEnd(event) {
+  console.log('event', event)
+  console.log('dragEnd')
+  event.target.classList.remove("dragging");
+}
+// Función para el evento dragleave
+function dragLeave(event) {
+  console.log('dragLeave')
   event.target.classList.remove("drag-over");
 }
 
@@ -333,13 +356,14 @@ function drop(event) {
   event.target.classList.remove("drag-over");
   let cardId = event.dataTransfer.getData("text/plain");
   let card = document.getElementById(cardId);
-  console.log(card)
+  card.style.left = 25 + "px";
+  card.style.top = 25 + "px";
 
   if (event.target.id.includes("receptor")) {
-    console.log('entroooo')
-    mazoReceptor1.push(cardId);
-    card.style.left = 25 + "px";
-    card.style.top = 25 + "px";
+    console.log(event.target.id)
+    mazos[event.target.id].push(cardId);
+    console.log(mazos[event.target.id])
+
     let lastCard = event.target.lastElementChild;
     // Obtener el z-index de la última carta
     let lastCardIndex = lastCard ? parseInt(lastCard.style.zIndex, 10) : 0;
@@ -347,5 +371,17 @@ function drop(event) {
     // Aumentar el z-index de la carta arrastrada
     card.style.zIndex = (lastCardIndex + 1).toString();
     event.target.appendChild(card);
+  } else {
+    //en caso el elmento target sea la carta dentro del div receptor
+    let divContenedor = document.getElementById(event.target.id).parentElement;
+    mazos[divContenedor.id].push(cardId);
+    console.log(mazos[divContenedor.id])
+    let lastCard = divContenedor.lastElementChild;
+    // Obtener el z-index de la última carta
+    let lastCardIndex = lastCard ? parseInt(lastCard.style.zIndex, 10) : 0;
+
+    // Aumentar el z-index de la carta arrastrada
+    card.style.zIndex = (lastCardIndex + 1).toString();
+    divContenedor.appendChild(card);
   }
 }
