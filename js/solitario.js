@@ -416,6 +416,7 @@ function revisarRestriciones(ultimoElemento, elementoEntrante) {
 }
 
 function mostrarModal () {
+    clearInterval(temporizador)
     modal.style.display = 'block';
     tiempoFinal.innerHTML = `Tiempo: ${tiempo}`
     movimientosFinal.innerHTML = `Movimientos: ${movimientos}`
