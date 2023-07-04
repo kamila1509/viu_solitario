@@ -19,6 +19,23 @@
 
   <body>
     <div class="central flex-column">
+      <div id="modal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Juego Terminado</h5>
+            </div>
+            <div class="modal-body">
+              <p id="tiempo_final">Tiempo:</p>
+              <p id="movimientos_final">Movimientos:</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="cerrar-modal" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="button" id="reiniciar" class="btn btn-primary">Empezar de Nuevo</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- Título principal -->
 
       <!--/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/

@@ -4,8 +4,20 @@ let palos = ["viu", "cua", "hex", "cir"];
 // Array de número de cartas
 //let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 // En las pruebas iniciales solo se trabajará con cuatro cartas por palo:
-let numeros = [9, 10, 11, 12];
+let numeros = [ 11, 12];
 
+let restricciones = {
+  viu: ["viu", "cua"],
+  cua: ["viu", "cua"],
+  hex: ["hex", "cir"],
+  cir: ["hex", "cir"]
+}
+// Modal
+let modal = document.getElementById("modal");
+let cerrarModal = document.getElementById("cerrar-modal");
+let reiniciarBoton = document.getElementById("reiniciar");
+let tiempoFinal = document.getElementById("tiempo_final");
+let movimientosFinal = document.getElementById("movimientos_final")
 // Tapetes
 let tapeteInicial = document.getElementById("inicial");
 let tapeteSobrantes = document.getElementById("sobrantes_receptor");
@@ -52,8 +64,8 @@ let contadores = {
 
 // Tiempo
 let contTiempo = document.getElementById("contador_tiempo"); // span cuenta tiempo
-let segundos = 0; // cuenta de segundos
-let temporizador = null; // manejador del temporizador
+let tiempo = ''; // cuenta de segundos
+let movimientos = 0; // manejador del temporizador
 
 /***** FIN DECLARACIÓN DE VARIABLES GLOBALES *****/
 
@@ -122,6 +134,7 @@ function arrancarTiempo() {
       (seconds < 10 ? "0" + seconds : seconds);
 
     contTiempo.innerHTML = formattedTime;
+    tiempo = formattedTime;
     // Aquí puedes actualizar el valor del temporizador en tu interfaz de usuario
   }, 1000);
 }
@@ -133,31 +146,19 @@ function arrancarTiempo() {
 	dentro de la rutina, esto aparecerá reflejado fuera de la misma.
 */
 function barajar(mazo) {
-  /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
-} // barajar
-
-/**
- 	En el elemento HTML que representa el tapete inicial (letiable tapeteInicial)
-	se deben añadir como hijos todos los elementos <img> del array mazo.
-	Antes de añadirlos, se deberían fijar propiedades como la anchura, la posición,
-	coordenadas top y left, algun atributo de tipo data-...
-	Al final se debe ajustar el contador de cartas a la cantidad oportuna
-*/
-// Función para desordenar un arreglo aleatoriamente utilizando el algoritmo de Fisher-Yates
-function shuffleArray(array) {
-  let currentIndex = array.length;
+  let currentIndex = mazo.length;
   let temporaryValue, randomIndex;
 
   while (currentIndex !== 0) {
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
 
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
+    temporaryValue = mazo[currentIndex];
+    mazo[currentIndex] = mazo[randomIndex];
+    mazo[randomIndex] = temporaryValue;
   }
 
-  return array;
+  return mazo;
 }
 
 function dividirArrayEnMitad(array) {
@@ -189,8 +190,7 @@ function cargarTapeteInicial(numeros) {
     }
   }
 
-  let combinacionAleatoria = shuffleArray(combinaciones);
-  combinacionAleatoria = shuffleArray(combinacionAleatoria);
+  let combinacionAleatoria = barajar(barajar(combinaciones));
   console.log(combinacionAleatoria);
   let barajaInicial = combinacionAleatoria;
   //const [barajaInicial, barajaSobrante] = dividirArrayEnMitad(combinacionAleatoria);
@@ -228,23 +228,6 @@ function cargarTapeteInicial(numeros) {
 //     tapeteSobrantes.appendChild(card);
 //   });
 // }
-/**
- 	Esta función debe incrementar el número correspondiente al contenido textual
-   	del elemento que actúa de contador
-*/
-function incContador(contador, valor) {
-  setContador(contador, valor);
-  /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
-} // incContador
-
-/**
-	Idem que anterior, pero decrementando 
-*/
-function decContador(contador, valor) {
-  setContador(contador, valor);
-  /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! ***/
-} // decContador
-
 /**
 	Similar a las anteriores, pero ajustando la cuenta al
 	valor especificado
@@ -314,40 +297,60 @@ function drop(event) {
 
   if (event.target.id.includes("receptor")) {
     console.log(event.target.id);
-    mazos[event.target.id].push(cardId);
-    console.log(mazos[event.target.id]);
 
     let lastCard = event.target.lastElementChild;
+    console.log(lastCard);
     // Obtener el z-index de la última carta
     let lastCardIndex = lastCard ? parseInt(lastCard.style.zIndex, 10) : 0;
 
     // Aumentar el z-index de la carta arrastrada
     card.style.zIndex = (lastCardIndex + 1).toString();
-    event.target.appendChild(card);
-    incContador(
-      contadores[`contador_${event.target.id}`],
-      mazos[event.target.id].length
-    );
-    eliminarCarta(cardId);
-    console.log(mazos.inicial);
+    if (revisarRestriciones(lastCard, card) || event.target.id.includes("sobrantes") ) {
+      mazos[event.target.id].push(cardId);
+      console.log(mazos[event.target.id]);
+      event.target.appendChild(card);
+      setContador(
+        contadores[`contador_${event.target.id}`],
+        mazos[event.target.id].length
+      );
+      eliminarCarta(cardId);
+      movimientos++
+      setContador(
+        contadores[`contador_${event.target.id}`],
+        mazos[event.target.id].length
+      );
+      console.log(mazos.inicial);
+    }
   } else {
     //en caso el elmento target sea la carta dentro del div receptor
     let divContenedor = document.getElementById(event.target.id).parentElement;
-    mazos[divContenedor.id].push(cardId);
-    console.log(mazos[divContenedor.id]);
+    
     let lastCard = divContenedor.lastElementChild;
     // Obtener el z-index de la última carta
     let lastCardIndex = lastCard ? parseInt(lastCard.style.zIndex, 10) : 0;
 
     // Aumentar el z-index de la carta arrastrada
     card.style.zIndex = (lastCardIndex + 1).toString();
-    divContenedor.appendChild(card);
-    incContador(
-      contadores[`contador_${divContenedor.id}`],
-      mazos[divContenedor.id].length
-    );
-    eliminarCarta(cardId);
-    console.log(mazos.inicial);
+    if (revisarRestriciones(lastCard, card) || divContenedor.id.includes("sobrantes") ) {
+      mazos[divContenedor.id].push(cardId);
+      console.log(mazos[divContenedor.id]);
+      divContenedor.appendChild(card);
+      setContador(
+        contadores[`contador_${divContenedor.id}`],
+        mazos[divContenedor.id].length
+      );
+      eliminarCarta(cardId);
+      movimientos++
+      console.log(mazos.inicial);
+    }
+  }
+  setContador(
+    contadores.contador_movimientos,
+    movimientos
+  );
+
+  if (mazoInicial.length == 0 && mazoSobrantes.length == 0) {
+    mostrarModal()
   }
 }
 
@@ -385,8 +388,40 @@ function eliminarCarta(cardId) {
 
 function removerCartasSobrantes() {
   let imagenes = tapeteSobrantes.querySelectorAll("img");
-
   imagenes.forEach(function (imagen) {
     imagen.remove();
   });
+}
+
+function revisarRestriciones(ultimoElemento, elementoEntrante) {
+  let cardPalo = elementoEntrante.getAttribute("data-palo");
+  let cardNumero = elementoEntrante.getAttribute("data-numero");
+
+  let ultimoElementoPalo = ultimoElemento.getAttribute("data-palo");
+  let ultimoElementoNumero = ultimoElemento.getAttribute("data-numero");
+
+  if (ultimoElemento.nodeName.toLowerCase() == "img") {
+    console.log("ultimoElementoNumero", ultimoElementoNumero);
+    console.log("ultimoElementoPalo", ultimoElementoPalo);
+    console.log("cardPalo", cardPalo);
+    console.log("cardNumero", cardNumero);
+    console.log(restricciones[ultimoElementoPalo].indexOf(cardPalo) == -1)
+    return (
+      ultimoElementoNumero - 1 == cardNumero &&
+      restricciones[ultimoElementoPalo].indexOf(cardPalo) == -1
+    );
+  } else {
+    return cardNumero == 12;
+  }
+}
+
+function mostrarModal () {
+    modal.style.display = 'block';
+    tiempoFinal.innerHTML = `Tiempo: ${tiempo}`
+    movimientosFinal.innerHTML = `Movimientos: ${movimientos}`
+    cerrarModal.addEventListener('click', () => {
+      modal.style.display = 'none';
+    })
+    reiniciarBoton.addEventListener('click', reiniciar)
+
 }
