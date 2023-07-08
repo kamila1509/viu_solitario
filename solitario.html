@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="es">
   <head>
     <title>Solitario VIU</title>
     <meta charset="utf-8" />
-    <link
+    <link 
       rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" 
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../css/solitario.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" 
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
+    </script> -->
+    <link rel="stylesheet" href="css/solitario.css" />
+
 
     <!--/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
 		Invocar a los ficheros de estilos y al JavaScript donde proceda
@@ -18,6 +21,69 @@
   </head>
 
   <body>
+    <!-- MENU DE NAVEGACION -->
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <button 
+          class="navbar-toggler" 
+          type="button" 
+          data-bs-toggle="collapse" 
+          data-bs-target="#navbarSupportedContent" 
+          aria-controls="navbarSupportedContent" 
+          aria-expanded="false" 
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent ">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0  ">
+              <li class="nav-item">
+                <a 
+                  href="#info"
+                  class="nav-link  text-light "
+                  data-bs-toggle="modal" data-bs-target="#infoModal"
+                  aria-current="page"
+                >
+                Asignatura
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Configuración
+              </a>
+              <ul class="dropdown-menu text-center">
+                <li><a class="dropdown-item" href="#">Cartas a repartir</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="NumCards" href="#" onclick="functionNumCards(2)">2</a></li><li><hr class="dropdown-divider"></li>
+                <li><a class="NumCards" href="#" onclick="functionNumCards(3)">3</a></li><li><hr class="dropdown-divider"></li>
+                <li><a class="NumCards" href="#" onclick="functionNumCards(4)">4</a></li><li><hr class="dropdown-divider"></li>
+                <li><a class="NumCards" href="#" onclick="functionNumCards(5)">5</a></li><li><hr class="dropdown-divider"></li>
+                <li><a class="NumCards" href="#" onclick="functionNumCards(6)">6</a></li><li><hr class="dropdown-divider"></li>
+                <li><a class="NumCards" href="#" onclick="functionNumCards(7)">7</a></li><li><hr class="dropdown-divider"></li>
+                <li><a class="NumCards" href="#" onclick="functionNumCards(8)">8</a></li><li><hr class="dropdown-divider"></li>
+                <li><a class="NumCards" href="#" onclick="functionNumCards(9)">9</a></li><li><hr class="dropdown-divider"></li>
+                <li><a class="NumCards" href="#" onclick="functionNumCards(10)">10</a></li><li><hr class="dropdown-divider"></li>
+                <li><a class="NumCards" href="#" onclick="functionNumCards(11)">11</a></li><li><hr class="dropdown-divider"></li>
+                <li><a class="NumCards" href="#" onclick="functionNumCards(12)">12</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+                <a 
+                  href="#Ayuda"
+                  class="nav-link  text-light "
+                  data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  aria-current="page"
+                >
+                Ayuda
+                </a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- PANTALLA MODAL DE TERMINACIÓN -->
     <div class="central flex-column">
       <div id="modal" class="modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -41,24 +107,30 @@
       <!--/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
 			Rellenar h1 e insertar el logo donde proceda
         	-->
-      <div class="container flex-row center">
-        <h1 id="titulo">Juego de Solitario</h1>
-        <img
-          width="240"
-          height="120"
-          loading="lazy"
-          src="imagenes/logoVIU.png"
-          alt="logo_viu"
-        />
+      <div class="container ">
+        <div class="container flex-row center align-items-center">
+          <h1 id="titulo">Juego de Solitario </h1>
+          <a href="https://www.universidadviu.com/es/">
+            <img href="https://www.universidadviu.com/es/" class="rounded"
+              width="240"
+              height="120"
+              loading="lazy"
+              src="imagenes/logoVIU.png"
+              alt="logo_viu"
+            />
+          </a>
+        </div>
       </div>
+
+
 
       <!-- Siguiente línea donde se indicará el tiempo transcurrido y la cantidad
 				de movimientos que se han hecho hasta el momento. Estos números se 
 				indicarán en los span internos -->
       <h2 id="marcadores">
-        <span>Tiempo: <span id="contador_tiempo"></span></span>
+        <span class="text-light">Tiempo: <span id="contador_tiempo"></span></span>
         <span style="display: inline-block; width: 200px"></span>
-        <span
+        <span class="text-light"
           >Movimientos: <span id="contador_movimientos" class=""></span
         ></span>
       </h2>
@@ -69,18 +141,18 @@
 				de elementos span -->
       <div id="mesa">
         <div class="tapetes_superiores">
-          <div id="inicial" class="tapete">
+          <div id="inicial" class="tapete rounded">
             <span id="contador_inicial" class="contador"></span>
           </div>
           <!--
 					-->
-          <div id="sobrantes_receptor" class="tapete">
+          <div id="sobrantes_receptor" class="tapete rounded">
             <span id="contador_sobrantes_receptor" class="contador"></span>
           </div>
         </div>
         <div
           id="receptor1"
-          class="tapete receptor"
+          class="tapete receptor rounded"
         >
           <span id="contador_receptor1" class="contador"></span>
         </div>
@@ -88,7 +160,7 @@
 				-->
         <div
           id="receptor2"
-          class="tapete receptor"
+          class="tapete receptor rounded"
         >
           <span id="contador_receptor2" class="contador"></span>
         </div>
@@ -96,7 +168,7 @@
 				-->
         <div
           id="receptor3"
-          class="tapete receptor"
+          class="tapete receptor rounded"
         >
           <span id="contador_receptor3" class="contador"></span>
         </div>
@@ -104,7 +176,7 @@
 				-->
         <div
           id="receptor4"
-          class="tapete receptor"
+          class="tapete receptor rounded" 
         >
           <span id="contador_receptor4" class="contador"></span>
         </div>
@@ -116,6 +188,60 @@
       </button>
     </div>
     <!-- class="central" -->
+
+
+    <!-- CUADRO MODAL GENERADO PARA MOSTRAR UNA PANTALLA DE AYUDA -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header ">
+            <h1 class="modal-title fs-5 " id="exampleModalLabel">Funcionamiento Juego Solitario</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center">
+            <a href="utils/Actividad1.pdf" target="_blank">Actividad 1.pdf</a>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary  mx-auto " data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CUADRO MODAL GENERADO PARA MOSTRAR UNA PANTALLA DE INFORMACION DE LA ASIGNATURA -->
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="infoModalLabel">Información Asignatura</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Actividad 1: HTML+CSS+JavaScript
+          </div>
+          <div class="modal-body viu">05MASW</div>
+          <div class="modal-body">DESARROLLO DE APLICACIONES WEB II: LADO DEL CLIENTE (FRONT-END) Y MULTIMEDIA</div>
+          <hr class="modal-divider"></li>
+          <div class="modal-body">Profesor: </div>
+          <div class="modal-body">-Ismael de Fez Lava</div>
+          
+          <div class="modal-body">Alumnos: </div>
+          <div class="modal-body">-Camila Micaela Urquizo Suca</div>
+          <div class="modal-body">-Alejandro Vázquez Menéndez</div>
+          <div class="modal-body">-David Lima Granada</div>
+
+          
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
   </body>
-  <script type="text/javascript" src="../js/solitario.js"></script>
+  <script type="text/javascript" src="js/solitario.js"></script>
 </html>

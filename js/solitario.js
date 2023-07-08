@@ -2,9 +2,9 @@
 // Array de palos
 let palos = ["viu", "cua", "hex", "cir"];
 // Array de número de cartas
-//let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 // En las pruebas iniciales solo se trabajará con cuatro cartas por palo:
-let numeros = [9, 10, 11, 12];
+//let numeros = [11, 12];
 
 let restricciones = {
   viu: ["viu", "cua"],
@@ -75,7 +75,40 @@ let movimientos = 0; // manejador del temporizador
 
 // El juego arranca ya al cargar la página: no se espera a reiniciar
 comenzarJuego();
+
 /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
+//functionNumCards PREPARA LA BARAJA PARA PROBAR LA PARTIDA CON MENOR NÚMERO DE CARTAS = num*4 cartas
+function functionNumCards(num){
+  removerCartasSobrantes();
+  removerCartasSobrantesAlReiniciarNumCartas();
+  numeros=[];
+  for(let i=12;i>12-num;i--){
+    numeros.push(i);
+  }
+    // Puesta a cero de contadores  
+  mazoInicial = [];
+  mazoSobrantes = [];
+  mazoReceptor1 = [];
+  mazoReceptor2 = [];
+  mazoReceptor3 = [];
+  mazoReceptor4 = [];
+  mazos = {
+    inicial: mazoInicial,
+    sobrantes_receptor: mazoSobrantes,
+    receptor1: mazoReceptor1,
+    receptor2: mazoReceptor2,
+    receptor3: mazoReceptor3,
+    receptor4: mazoReceptor4,
+  };
+  cargarTapeteInicial(numeros);
+  setContador(contReceptor1, 0);
+  setContador(contReceptor2, 0);
+  setContador(contReceptor3, 0);
+  setContador(contReceptor4, 0);
+  setContador(contSobrantes, 0);
+  clearInterval(temporizador);
+  arrancarTiempo();
+}
 
 // Desarrollo del comienzo de juego
 function comenzarJuego() {
@@ -88,8 +121,7 @@ function comenzarJuego() {
 	*/
 
   /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
-
-  // Barajar y dejar mazoInicial en tapete inicial
+   // Barajar y dejar mazoInicial en tapete inicial
   cargarTapeteInicial(numeros);
   setEvents("receptor1");
   setEvents("receptor2");
@@ -136,7 +168,7 @@ function arrancarTiempo() {
 
     contTiempo.innerHTML = formattedTime;
     tiempo = formattedTime;
-    // Aquí puedes actualizar el valor del temporizador en tu interfaz de usuario
+    // Tiempo intervalo de 1 segundo para controlar el tiempo transcurrido
   }, 1000);
 }
 
@@ -176,12 +208,16 @@ function createCard(combinacion) {
   card.style.position = "absolute";
   card.width = 50;
   card.height = 70;
-  card.src = "../imagenes/baraja/" + combinacion + ".png";
+  card.className="border border-dark  border-2 rounded";
+  card.src = "imagenes/baraja/" + combinacion + ".png";
   card.alt = combinacion;
   card.id = combinacion;
   return card;
+
+  
 }
 function cargarTapeteInicial(numeros) {
+  console.log("Global 3",numeros);
   let combinaciones = [];
   // Obtener una combinación aleatoria sin repetir
   for (let i = 0; i < palos.length; i++) {
@@ -189,6 +225,7 @@ function cargarTapeteInicial(numeros) {
       let combinacion = numeros[j] + "-" + palos[i];
       combinaciones.push(combinacion);
     }
+    console.log("numero",numeros.length);
   }
 
   let combinacionAleatoria = barajar(combinaciones);
@@ -424,6 +461,15 @@ function removerCartasSobrantes() {
     imagen.remove();
   });
 }
+function removerCartasSobrantesAlReiniciarNumCartas() {
+  let imagenes = tapeteInicial.querySelectorAll("img");
+  imagenes.forEach(function (imagen) {
+    imagen.remove();
+  });
+}
+
+
+
 
 function revisarRestriciones(ultimoElemento, elementoEntrante) {
   let cardPalo = elementoEntrante.getAttribute("data-palo");
