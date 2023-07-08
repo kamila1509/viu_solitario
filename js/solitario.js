@@ -1,11 +1,10 @@
+////////////////////////////////////////////////////////////////////////////////////////////
 /***** INICIO DECLARACIÓN DE VARIABLES GLOBALES *****/
 // Array de palos
 let palos = ["viu", "cua", "hex", "cir"];
 // Array de número de cartas
 let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 // En las pruebas iniciales solo se trabajará con cuatro cartas por palo:
-//let numeros = [11, 12];
-
 let restricciones = {
   viu: ["viu", "cua"],
   cua: ["viu", "cua"],
@@ -26,7 +25,6 @@ let tapeteReceptor2 = document.getElementById("receptor2");
 let tapeteReceptor3 = document.getElementById("receptor3");
 let tapeteReceptor4 = document.getElementById("receptor4");
 let contenedorInicial;
-
 // Mazos
 let mazoInicial = [];
 let mazoSobrantes = [];
@@ -34,7 +32,6 @@ let mazoReceptor1 = [];
 let mazoReceptor2 = [];
 let mazoReceptor3 = [];
 let mazoReceptor4 = [];
-
 let mazos = {
   inicial: mazoInicial,
   sobrantes_receptor: mazoSobrantes,
@@ -67,16 +64,14 @@ let contadores = {
 let contTiempo = document.getElementById("contador_tiempo"); // span cuenta tiempo
 let tiempo = ""; // cuenta de segundos
 let movimientos = 0; // manejador del temporizador
-
 /***** FIN DECLARACIÓN DE VARIABLES GLOBALES *****/
+////////////////////////////////////////////////////////////////////////////////////////////
 
-// Rutina asociada a boton reset
-/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
 
 // El juego arranca ya al cargar la página: no se espera a reiniciar
 comenzarJuego();
 
-/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
+////////////////////////////////////////////////////////////////////////////////////////////
 //functionNumCards PREPARA LA BARAJA PARA PROBAR LA PARTIDA CON MENOR NÚMERO DE CARTAS = num*4 cartas
 function functionNumCards(num){
   removerCartasSobrantes();
@@ -112,7 +107,9 @@ function functionNumCards(num){
   clearInterval(temporizador);
   arrancarTiempo();
 }
+////////////////////////////////////////////////////////////////////////////////////////////
 
+////////////////////////////////////////////////////////////////////////////////////////////
 // Desarrollo del comienzo de juego
 function comenzarJuego() {
   /* Crear baraja, es decir crear el mazoInicial. Este será un array cuyos 
@@ -123,7 +120,7 @@ function comenzarJuego() {
 	el elemento img, inclúyase como elemento del array mazoInicial. 
 	*/
 
-  ////////////////////////////////////////////////////////////////////////////////////////////
+  
   //sessionStorage almacena en variable de sesión cuantas cartas utilizar. 
   //Ya que al reiniciar contador/partida se reinicia la página y todas sus variables
   num=sessionStorage.getItem("NumCardsSolitario");
@@ -138,8 +135,7 @@ function comenzarJuego() {
     }
   }
   console.log("numeros...",numeros.length);
-  ////////////////////////////////////////////////////////////////////////////////////////////////
-
+  
    // Barajar y dejar mazoInicial en tapete inicial
   cargarTapeteInicial(numeros);
   setEvents("receptor1");
@@ -159,6 +155,7 @@ function comenzarJuego() {
   // Arrancar el conteo de tiempo
   arrancarTiempo();
 } // comenzarJuego
+////////////////////////////////////////////////////////////////////////////////////////////
 
 function arrancarTiempo() {
   let seconds = 0;
