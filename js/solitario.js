@@ -4,20 +4,20 @@ let palos = ["viu", "cua", "hex", "cir"];
 // Array de número de cartas
 //let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 // En las pruebas iniciales solo se trabajará con cuatro cartas por palo:
-let numeros = [ 9,10,11, 12];
+let numeros = [9, 10, 11, 12];
 
 let restricciones = {
   viu: ["viu", "cua"],
   cua: ["viu", "cua"],
   hex: ["hex", "cir"],
-  cir: ["hex", "cir"]
-}
+  cir: ["hex", "cir"],
+};
 // Modal
 let modal = document.getElementById("modal");
 let cerrarModal = document.getElementById("cerrar-modal");
 let reiniciarBoton = document.getElementById("reiniciar");
 let tiempoFinal = document.getElementById("tiempo_final");
-let movimientosFinal = document.getElementById("movimientos_final")
+let movimientosFinal = document.getElementById("movimientos_final");
 // Tapetes
 let tapeteInicial = document.getElementById("inicial");
 let tapeteSobrantes = document.getElementById("sobrantes_receptor");
@@ -25,7 +25,7 @@ let tapeteReceptor1 = document.getElementById("receptor1");
 let tapeteReceptor2 = document.getElementById("receptor2");
 let tapeteReceptor3 = document.getElementById("receptor3");
 let tapeteReceptor4 = document.getElementById("receptor4");
-let contenedorInicial
+let contenedorInicial;
 
 // Mazos
 let mazoInicial = [];
@@ -65,7 +65,7 @@ let contadores = {
 
 // Tiempo
 let contTiempo = document.getElementById("contador_tiempo"); // span cuenta tiempo
-let tiempo = ''; // cuenta de segundos
+let tiempo = ""; // cuenta de segundos
 let movimientos = 0; // manejador del temporizador
 
 /***** FIN DECLARACIÓN DE VARIABLES GLOBALES *****/
@@ -240,9 +240,9 @@ function setEvents(containers) {
 function dragStart(event) {
   console.log("dragStart");
   event.dataTransfer.setData("text/plain", event.target.id);
-  console.log(event.currentTarget)
+  console.log(event.currentTarget);
   contenedorInicial = document.getElementById(event.target.id).parentElement;
-  console.log('dragStart',contenedorInicial)
+  console.log("dragStart", contenedorInicial);
   event.currentTarget.classList.add("dragging");
 }
 
@@ -285,8 +285,11 @@ function drop(event) {
   let card = document.getElementById(cardId);
   card.style.left = 25 + "px";
   card.style.top = 25 + "px";
-  console.log('contenedorInicial', mazos[contenedorInicial.id])
-  setContador(contadores[`contador_${contenedorInicial.id}`],mazos[contenedorInicial.id].length)
+  console.log("contenedorInicial", mazos[contenedorInicial.id]);
+  setContador(
+    contadores[`contador_${contenedorInicial.id}`],
+    mazos[contenedorInicial.id].length
+  );
   if (event.target.id.includes("receptor")) {
     console.log(event.target.id);
 
@@ -294,7 +297,7 @@ function drop(event) {
     console.log(lastCard);
     // Obtener el z-index de la última carta
     let lastCardIndex = lastCard ? parseInt(lastCard.style.zIndex, 10) : 0;
-     // Aumentar el z-index de la carta arrastrada
+    // Aumentar el z-index de la carta arrastrada
     card.style.zIndex = (lastCardIndex + 1).toString();
     const containerId = event.target.id;
     const container = mazos[containerId];
@@ -302,8 +305,11 @@ function drop(event) {
       // Si el contenedor es el tapete inicial, no se debe duplicar la carta
       return;
     }
-    if(!container.includes(cardId)) {
-      if (revisarRestriciones(lastCard, card) || event.target.id.includes("sobrantes") ) {
+    if (!container.includes(cardId)) {
+      if (
+        revisarRestriciones(lastCard, card) ||
+        event.target.id.includes("sobrantes")
+      ) {
         mazos[event.target.id].push(cardId);
         console.log(mazos[event.target.id]);
         event.target.appendChild(card);
@@ -312,7 +318,7 @@ function drop(event) {
           mazos[event.target.id].length
         );
         eliminarCarta(cardId);
-        movimientos++
+        movimientos++;
         setContador(
           contadores[`contador_${event.target.id}`],
           mazos[event.target.id].length
@@ -323,7 +329,7 @@ function drop(event) {
   } else {
     //en caso el elmento target sea la carta dentro del div receptor
     let divContenedor = document.getElementById(event.target.id).parentElement;
-    
+
     let lastCard = divContenedor.lastElementChild;
     // Obtener el z-index de la última carta
     let lastCardIndex = lastCard ? parseInt(lastCard.style.zIndex, 10) : 0;
@@ -332,9 +338,11 @@ function drop(event) {
     const containerId = divContenedor.id;
     const container = mazos[containerId];
 
-    
-    if(!container.includes(cardId)){
-      if (revisarRestriciones(lastCard, card) || divContenedor.id.includes("sobrantes") ) {
+    if (!container.includes(cardId)) {
+      if (
+        revisarRestriciones(lastCard, card) ||
+        divContenedor.id.includes("sobrantes")
+      ) {
         mazos[divContenedor.id].push(cardId);
         console.log(mazos[divContenedor.id]);
         divContenedor.appendChild(card);
@@ -343,28 +351,25 @@ function drop(event) {
           mazos[divContenedor.id].length
         );
         eliminarCarta(cardId);
-        movimientos++
+        movimientos++;
         setContador(
-          contadores[`contador_${divContenedor.id}`], 
+          contadores[`contador_${divContenedor.id}`],
           mazos[divContenedor.id].length
         );
         console.log(mazos.inicial);
       }
     }
   }
-  setContador(
-    contadores.contador_movimientos,
-    movimientos
-  );
+  setContador(contadores.contador_movimientos, movimientos);
 
   if (mazoInicial.length == 0 && mazoSobrantes.length == 0) {
-    mostrarModal()
+    mostrarModal();
   }
 }
 
 function eliminarCarta(cardId) {
-  
   // Buscar el índice de la carta a eliminar en el mazoinicial
+  let indiceTapetePrincipal = mazoInicial.indexOf(cardId);
   let indice = mazos[contenedorInicial.id].indexOf(cardId);
 
   // Verificar si el evento se encuentra en el array
@@ -372,7 +377,15 @@ function eliminarCarta(cardId) {
     // Eliminar el evento del array usando el método splice()
     mazos[contenedorInicial.id].splice(indice, 1);
   }
-  setContador(contadores[`contador_${contenedorInicial.id}`], mazos[contenedorInicial.id].length);
+  if (indiceTapetePrincipal !== -1) {
+    mazoInicial.splice(indice, 1);
+  }
+  setContador(
+    contadores[`contador_${contenedorInicial.id}`],
+    mazos[contenedorInicial.id].length
+  );
+
+  setContador(contInicial, mazoInicial.length);
 
   if (mazoInicial.length == 0 && mazoSobrantes.length > 0) {
     mazoInicial = [...mazoSobrantes];
@@ -414,7 +427,7 @@ function revisarRestriciones(ultimoElemento, elementoEntrante) {
     console.log("ultimoElementoPalo", ultimoElementoPalo);
     console.log("cardPalo", cardPalo);
     console.log("cardNumero", cardNumero);
-    console.log(restricciones[ultimoElementoPalo].indexOf(cardPalo) == -1)
+    console.log(restricciones[ultimoElementoPalo].indexOf(cardPalo) == -1);
     return (
       ultimoElementoNumero - 1 == cardNumero &&
       restricciones[ultimoElementoPalo].indexOf(cardPalo) == -1
@@ -424,14 +437,13 @@ function revisarRestriciones(ultimoElemento, elementoEntrante) {
   }
 }
 
-function mostrarModal () {
-    clearInterval(temporizador)
-    modal.style.display = 'block';
-    tiempoFinal.innerHTML = `Tiempo: ${tiempo}`
-    movimientosFinal.innerHTML = `Movimientos: ${movimientos}`
-    cerrarModal.addEventListener('click', () => {
-      modal.style.display = 'none';
-    })
-    reiniciarBoton.addEventListener('click', reiniciar)
-
+function mostrarModal() {
+  clearInterval(temporizador);
+  modal.style.display = "block";
+  tiempoFinal.innerHTML = `Tiempo: ${tiempo}`;
+  movimientosFinal.innerHTML = `Movimientos: ${movimientos}`;
+  cerrarModal.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+  reiniciarBoton.addEventListener("click", reiniciar);
 }
