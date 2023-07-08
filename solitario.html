@@ -9,9 +9,9 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" 
       integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"
     />
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" 
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" 
       integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
-    </script>
+    </script> -->
     <link rel="stylesheet" href="css/solitario.css" />
 
 
@@ -21,6 +21,57 @@
   </head>
 
   <body>
+    <!-- MENU DE NAVEGACION -->
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <button 
+          class="navbar-toggler" 
+          type="button" 
+          data-bs-toggle="collapse" 
+          data-bs-target="#navbarSupportedContent" 
+          aria-controls="navbarSupportedContent" 
+          aria-expanded="false" 
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent ">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0  ">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Configuración
+              </a>
+              <ul class="dropdown-menu text-center">
+                <li><a class="dropdown-item" href="#">Cartas a repartir</a></li>
+                <li><a class="NumCards text-center" href="#">2</a></li>
+                <li><a class="NumCards" href="#">3</a></li>
+                <li><a class="NumCards" href="#">4</a></li>
+                <li><a class="NumCards" href="#">5</a></li>
+                <li><a class="NumCards" href="#">6</a></li>
+                <li><a class="NumCards" href="#">7</a></li>
+                <li><a class="NumCards" href="#">8</a></li>
+                <li><a class="NumCards" href="#">9</a></li>
+                <li><a class="NumCards" href="#">10</a></li>
+                <li><a class="NumCards" href="#">11</a></li>
+                <li><a class="NumCards" href="#">12</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+                <a 
+                  href="#Ayuda"
+                  class="nav-link  text-light "
+                  data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  aria-current="page"
+                >
+                Ayuda
+                </a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
     <div class="central flex-column">
       <div id="modal" class="modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -44,16 +95,20 @@
       <!--/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
 			Rellenar h1 e insertar el logo donde proceda
         	-->
-      <div class="container flex-row center">
-        <h1 id="titulo">Juego de Solitario</h1>
-        <img
-          width="240"
-          height="120"
-          loading="lazy"
-          src="imagenes/logoVIU.png"
-          alt="logo_viu"
-        />
+      <div class="container flex-row center ">
+        <h1 id="titulo">Juego de Solitario </h1>
+        <a href="https://www.universidadviu.com/es/">
+          <img href="https://www.universidadviu.com/es/" class="rounded"
+            width="240"
+            height="120"
+            loading="lazy"
+            src="imagenes/logoVIU.png"
+            alt="logo_viu"
+          />
+        </a>
       </div>
+
+
 
       <!-- Siguiente línea donde se indicará el tiempo transcurrido y la cantidad
 				de movimientos que se han hecho hasta el momento. Estos números se 
@@ -119,6 +174,29 @@
       </button>
     </div>
     <!-- class="central" -->
+
+
+    <!-- CUADRO MODAL GENERADO PARA MOSTRAR UNA PANTALLA DE AYUDA -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Ayuda Juego Solitario</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            El funcionamiento del juego...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
   </body>
   <script type="text/javascript" src="js/solitario.js"></script>
 </html>
