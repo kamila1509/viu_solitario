@@ -194,15 +194,15 @@ function barajar(mazo) {
   return mazo;
 }
 
-function dividirArrayEnMitad(array) {
-  const longitud = array.length;
-  const puntoMedio = Math.floor(longitud / 2);
+// function dividirArrayEnMitad(array) {
+//   const longitud = array.length;
+//   const puntoMedio = Math.floor(longitud / 2);
 
-  const primeraMitad = array.slice(0, puntoMedio);
-  const segundaMitad = array.slice(puntoMedio);
+//   const primeraMitad = array.slice(0, puntoMedio);
+//   const segundaMitad = array.slice(puntoMedio);
 
-  return [primeraMitad, segundaMitad];
-}
+//   return [primeraMitad, segundaMitad];
+// }
 function createCard(combinacion) {
   let card = document.createElement("img");
   card.style.position = "absolute";
