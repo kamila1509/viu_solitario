@@ -176,7 +176,7 @@ function createCard(combinacion) {
   card.style.position = "absolute";
   card.width = 50;
   card.height = 70;
-  card.src = "../imagenes/baraja/" + combinacion + ".png";
+  card.src = "imagenes/baraja/" + combinacion + ".png";
   card.alt = combinacion;
   card.id = combinacion;
   return card;
