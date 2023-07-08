@@ -202,7 +202,9 @@ function cargarTapeteInicial(numeros) {
     let card = createCard(combinacion);
     card.style.top = index * 5 + "px";
     card.style.left = index * 5 + "px";
-    card.draggable = true;
+    console.log(combinacion)
+    console.log(index)
+    card.draggable = index === barajaInicial.length - 1
     card.setAttribute("data-palo", combinacion.split("-")[1]);
     card.setAttribute("data-numero", combinacion.split("-")[0]);
     card.addEventListener("dragstart", dragStart);
@@ -225,7 +227,13 @@ function reiniciar() {
   clearInterval(temporizador);
   location.reload();
 }
-
+function actualizarUltimaCartaMovible () {
+  if (mazoInicial.length > 0) {
+    const siguienteCarta = mazoInicial[mazoInicial.length - 1];
+    const siguienteCartaElemento = document.getElementById(siguienteCarta);
+    siguienteCartaElemento.draggable = true;
+  }
+}
 function setEvents(containers) {
   // Obtener el div de destino para soltar las cartas
   let divDestino = document.getElementById(containers);
@@ -319,6 +327,7 @@ function drop(event) {
         );
         eliminarCarta(cardId);
         movimientos++;
+        actualizarUltimaCartaMovible()
         setContador(
           contadores[`contador_${event.target.id}`],
           mazos[event.target.id].length
@@ -352,6 +361,7 @@ function drop(event) {
         );
         eliminarCarta(cardId);
         movimientos++;
+        actualizarUltimaCartaMovible()
         setContador(
           contadores[`contador_${divContenedor.id}`],
           mazos[divContenedor.id].length
