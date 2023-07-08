@@ -2,9 +2,9 @@
 // Array de palos
 let palos = ["viu", "cua", "hex", "cir"];
 // Array de número de cartas
-//let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+let numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 // En las pruebas iniciales solo se trabajará con cuatro cartas por palo:
-let numeros = [11, 12];
+//let numeros = [11, 12];
 
 let restricciones = {
   viu: ["viu", "cua"],
@@ -76,7 +76,28 @@ let movimientos = 0; // manejador del temporizador
 // El juego arranca ya al cargar la página: no se espera a reiniciar
 comenzarJuego();
 /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
+function functionNumCards(num){
+  console.log("Global 1",numeros);
+  removerCartasSobrantes();
+  removerCartasSobrantesAlReiniciarNumCartas();
+  numeros=[];
+  for(let i=12;i>12-num;i--){
+    numeros.push(i);
+  }
+  
+  console.log("Global 2",numeros);
 
+    // Puesta a cero de contadores de mazos
+  //reiniciar();
+  cargarTapeteInicial(numeros);
+  setContador(contReceptor1, 0);
+  setContador(contReceptor2, 0);
+  setContador(contReceptor3, 0);
+  setContador(contReceptor4, 0);
+  setContador(contSobrantes, 0);
+
+  
+}
 // Desarrollo del comienzo de juego
 function comenzarJuego() {
   /* Crear baraja, es decir crear el mazoInicial. Este será un array cuyos 
@@ -88,8 +109,7 @@ function comenzarJuego() {
 	*/
 
   /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
-
-  // Barajar y dejar mazoInicial en tapete inicial
+   // Barajar y dejar mazoInicial en tapete inicial
   cargarTapeteInicial(numeros);
   setEvents("receptor1");
   setEvents("receptor2");
@@ -182,6 +202,7 @@ function createCard(combinacion) {
   return card;
 }
 function cargarTapeteInicial(numeros) {
+  console.log("Global 3",numeros);
   let combinaciones = [];
   // Obtener una combinación aleatoria sin repetir
   for (let i = 0; i < palos.length; i++) {
@@ -189,6 +210,7 @@ function cargarTapeteInicial(numeros) {
       let combinacion = numeros[j] + "-" + palos[i];
       combinaciones.push(combinacion);
     }
+    console.log("numero",numeros.length);
   }
 
   let combinacionAleatoria = barajar(combinaciones);
@@ -414,6 +436,15 @@ function removerCartasSobrantes() {
     imagen.remove();
   });
 }
+function removerCartasSobrantesAlReiniciarNumCartas() {
+  let imagenes = tapeteInicial.querySelectorAll("img");
+  imagenes.forEach(function (imagen) {
+    imagen.remove();
+  });
+}
+
+
+
 
 function revisarRestriciones(ultimoElemento, elementoEntrante) {
   let cardPalo = elementoEntrante.getAttribute("data-palo");
