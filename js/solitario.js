@@ -107,6 +107,7 @@ function functionNumCards(num){
   setContador(contReceptor4, 0);
   setContador(contSobrantes, 0);
   clearInterval(temporizador);
+  arrancarTiempo();
 }
 
 // Desarrollo del comienzo de juego
