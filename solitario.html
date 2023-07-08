@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="es">
   <head>
     <title>Solitario VIU</title>
     <meta charset="utf-8" />
-    <link
+    <link 
       rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" 
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"
     />
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" 
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
+    </script>
     <link rel="stylesheet" href="../css/solitario.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
 
     <!--/*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
 		Invocar a los ficheros de estilos y al JavaScript donde proceda
@@ -56,9 +59,9 @@
 				de movimientos que se han hecho hasta el momento. Estos números se 
 				indicarán en los span internos -->
       <h2 id="marcadores">
-        <span>Tiempo: <span id="contador_tiempo"></span></span>
+        <span class="text-light">Tiempo: <span id="contador_tiempo"></span></span>
         <span style="display: inline-block; width: 200px"></span>
-        <span
+        <span class="text-light"
           >Movimientos: <span id="contador_movimientos" class=""></span
         ></span>
       </h2>
@@ -69,18 +72,18 @@
 				de elementos span -->
       <div id="mesa">
         <div class="tapetes_superiores">
-          <div id="inicial" class="tapete">
+          <div id="inicial" class="tapete rounded">
             <span id="contador_inicial" class="contador"></span>
           </div>
           <!--
 					-->
-          <div id="sobrantes_receptor" class="tapete">
+          <div id="sobrantes_receptor" class="tapete rounded">
             <span id="contador_sobrantes_receptor" class="contador"></span>
           </div>
         </div>
         <div
           id="receptor1"
-          class="tapete receptor"
+          class="tapete receptor rounded"
         >
           <span id="contador_receptor1" class="contador"></span>
         </div>
@@ -88,7 +91,7 @@
 				-->
         <div
           id="receptor2"
-          class="tapete receptor"
+          class="tapete receptor rounded"
         >
           <span id="contador_receptor2" class="contador"></span>
         </div>
@@ -96,7 +99,7 @@
 				-->
         <div
           id="receptor3"
-          class="tapete receptor"
+          class="tapete receptor rounded"
         >
           <span id="contador_receptor3" class="contador"></span>
         </div>
@@ -104,7 +107,7 @@
 				-->
         <div
           id="receptor4"
-          class="tapete receptor"
+          class="tapete receptor rounded" 
         >
           <span id="contador_receptor4" class="contador"></span>
         </div>

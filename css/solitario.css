@@ -9,6 +9,9 @@
 /* Todos los contadores estarán ubicados en la parte inferior 
    derecha (position absolute) de los respectivos tapetes (position relative).
 */
+body{
+	background: green;
+}
 .contador {
 	position: absolute;
 	bottom: 0px;
@@ -35,6 +38,7 @@
 h1#titulo {
 	text-align: center;
 	color: #E65014;
+	color: white;
 }
 
 /* Centrado de los marcadores de tiempo y movimientos */
