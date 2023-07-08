@@ -89,3 +89,7 @@ div.tapete.receptor{
 button#reset {
 	max-width: 100px;
 }
+div.viu {
+	text-align: center;
+	color: #E65014;
+}
