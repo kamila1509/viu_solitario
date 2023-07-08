@@ -75,29 +75,40 @@ let movimientos = 0; // manejador del temporizador
 
 // El juego arranca ya al cargar la página: no se espera a reiniciar
 comenzarJuego();
+
 /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
+//functionNumCards PREPARA LA BARAJA PARA PROBAR LA PARTIDA CON MENOR NÚMERO DE CARTAS = num*4 cartas
 function functionNumCards(num){
-  console.log("Global 1",numeros);
   removerCartasSobrantes();
   removerCartasSobrantesAlReiniciarNumCartas();
   numeros=[];
   for(let i=12;i>12-num;i--){
     numeros.push(i);
   }
-  
-  console.log("Global 2",numeros);
-
-    // Puesta a cero de contadores de mazos
-  //reiniciar();
+    // Puesta a cero de contadores  
+  mazoInicial = [];
+  mazoSobrantes = [];
+  mazoReceptor1 = [];
+  mazoReceptor2 = [];
+  mazoReceptor3 = [];
+  mazoReceptor4 = [];
+  mazos = {
+    inicial: mazoInicial,
+    sobrantes_receptor: mazoSobrantes,
+    receptor1: mazoReceptor1,
+    receptor2: mazoReceptor2,
+    receptor3: mazoReceptor3,
+    receptor4: mazoReceptor4,
+  };
   cargarTapeteInicial(numeros);
   setContador(contReceptor1, 0);
   setContador(contReceptor2, 0);
   setContador(contReceptor3, 0);
   setContador(contReceptor4, 0);
   setContador(contSobrantes, 0);
-
-  
+  clearInterval(temporizador);
 }
+
 // Desarrollo del comienzo de juego
 function comenzarJuego() {
   /* Crear baraja, es decir crear el mazoInicial. Este será un array cuyos 
@@ -156,7 +167,7 @@ function arrancarTiempo() {
 
     contTiempo.innerHTML = formattedTime;
     tiempo = formattedTime;
-    // Aquí puedes actualizar el valor del temporizador en tu interfaz de usuario
+    // Tiempo intervalo de 1 segundo para controlar el tiempo transcurrido
   }, 1000);
 }
 
@@ -196,10 +207,13 @@ function createCard(combinacion) {
   card.style.position = "absolute";
   card.width = 50;
   card.height = 70;
+  card.className="border border-dark  border-2 rounded";
   card.src = "imagenes/baraja/" + combinacion + ".png";
   card.alt = combinacion;
   card.id = combinacion;
   return card;
+
+  
 }
 function cargarTapeteInicial(numeros) {
   console.log("Global 3",numeros);

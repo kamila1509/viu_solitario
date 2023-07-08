@@ -67,7 +67,7 @@ div.tapete{
 div.tapete#inicial{
 	width: 340px;
 	height: 340px;			
-	background-color: lightgrey;
+	//background-color: lightgrey;
 }
 
 /* Dimensiones para todos los tapetes salvo el inicial */
