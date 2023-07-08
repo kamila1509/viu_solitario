@@ -328,8 +328,6 @@ function drop(event) {
   event.target.classList.remove("drag-over");
   let cardId = event.dataTransfer.getData("text/plain");
   let card = document.getElementById(cardId);
-  card.style.left = 25 + "px";
-  card.style.top = 25 + "px";
   console.log("contenedorInicial", mazos[contenedorInicial.id]);
   setContador(
     contadores[`contador_${contenedorInicial.id}`],
@@ -355,6 +353,8 @@ function drop(event) {
         revisarRestriciones(lastCard, card) ||
         event.target.id.includes("sobrantes")
       ) {
+        card.style.left = 25 + "px";
+        card.style.top = 25 + "px";
         mazos[event.target.id].push(cardId);
         console.log(mazos[event.target.id]);
         event.target.appendChild(card);
@@ -389,6 +389,8 @@ function drop(event) {
         revisarRestriciones(lastCard, card) ||
         divContenedor.id.includes("sobrantes")
       ) {
+        card.style.left = 25 + "px";
+        card.style.top = 25 + "px";
         mazos[divContenedor.id].push(cardId);
         console.log(mazos[divContenedor.id]);
         divContenedor.appendChild(card);
