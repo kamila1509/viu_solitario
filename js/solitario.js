@@ -81,6 +81,9 @@ comenzarJuego();
 function functionNumCards(num){
   removerCartasSobrantes();
   removerCartasSobrantesAlReiniciarNumCartas();
+  sessionStorage.setItem("NumCardsSolitario", num);
+
+
   numeros=[];
   for(let i=12;i>12-num;i--){
     numeros.push(i);
@@ -120,7 +123,23 @@ function comenzarJuego() {
 	el elemento img, inclúyase como elemento del array mazoInicial. 
 	*/
 
-  /*** !!!!!!!!!!!!!!!!!!! CODIGO !!!!!!!!!!!!!!!!!!!! **/
+  ////////////////////////////////////////////////////////////////////////////////////////////
+  //sessionStorage almacena en variable de sesión cuantas cartas utilizar. 
+  //Ya que al reiniciar contador/partida se reinicia la página y todas sus variables
+  num=sessionStorage.getItem("NumCardsSolitario");
+  if (num==null){
+    console.log("sessionStorage NumCardsSolitario=NULL ");
+  }
+  else {
+    console.log("valor=",num);
+    numeros=[];
+    for(let i=12;i>12-num;i--){
+      numeros.push(i);
+    }
+  }
+  console.log("numeros...",numeros.length);
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+
    // Barajar y dejar mazoInicial en tapete inicial
   cargarTapeteInicial(numeros);
   setEvents("receptor1");
@@ -217,7 +236,7 @@ function createCard(combinacion) {
   
 }
 function cargarTapeteInicial(numeros) {
-  console.log("Global 3",numeros);
+  // console.log("Global 3",numeros);
   let combinaciones = [];
   // Obtener una combinación aleatoria sin repetir
   for (let i = 0; i < palos.length; i++) {
@@ -225,11 +244,11 @@ function cargarTapeteInicial(numeros) {
       let combinacion = numeros[j] + "-" + palos[i];
       combinaciones.push(combinacion);
     }
-    console.log("numero",numeros.length);
+    // console.log("numero",numeros.length);
   }
 
   let combinacionAleatoria = barajar(combinaciones);
-  console.log(combinacionAleatoria);
+  // console.log(combinacionAleatoria);
   let barajaInicial = combinacionAleatoria;
   //const [barajaInicial, barajaSobrante] = dividirArrayEnMitad(combinacionAleatoria);
   //cargarSobrantes(barajaSobrante)
@@ -239,8 +258,8 @@ function cargarTapeteInicial(numeros) {
     let card = createCard(combinacion);
     card.style.top = index * 5 + "px";
     card.style.left = index * 5 + "px";
-    console.log(combinacion)
-    console.log(index)
+    // console.log(combinacion)
+    // console.log(index)
     card.draggable = index === barajaInicial.length - 1
     card.setAttribute("data-palo", combinacion.split("-")[1]);
     card.setAttribute("data-numero", combinacion.split("-")[0]);
@@ -283,42 +302,42 @@ function setEvents(containers) {
 
 // Función para el evento dragstart
 function dragStart(event) {
-  console.log("dragStart");
+  // console.log("dragStart");
   event.dataTransfer.setData("text/plain", event.target.id);
-  console.log(event.currentTarget);
+  // console.log(event.currentTarget);
   contenedorInicial = document.getElementById(event.target.id).parentElement;
-  console.log("dragStart", contenedorInicial);
+  // console.log("dragStart", contenedorInicial);
   event.currentTarget.classList.add("dragging");
 }
 
 // Función para el evento dragenter
 function dragEnter(event) {
   event.preventDefault();
-  console.log("dragEnter");
+  // console.log("dragEnter");
   event.currentTarget.classList.add("hovered");
   event.target.classList.add("drag-over");
 }
 // Función para el evento dragover
 function dragOver(event) {
-  console.log("dragOver");
+  // console.log("dragOver");
   event.preventDefault();
 }
 
 // Función para el evento dragleave
 function dragLeave(event) {
-  console.log("dragLeave");
+  // console.log("dragLeave");
   event.currentTarget.classList.remove("hovered");
 
   event.target.classList.remove("drag-over");
 }
 // Función para el evento dragend
 function dragEnd(event) {
-  console.log("dragEnd");
+  // console.log("dragEnd");
   event.target.classList.remove("dragging");
 }
 // Función para el evento dragleave
 function dragLeave(event) {
-  console.log("dragLeave");
+  // console.log("dragLeave");
   event.target.classList.remove("drag-over");
 }
 
@@ -328,16 +347,16 @@ function drop(event) {
   event.target.classList.remove("drag-over");
   let cardId = event.dataTransfer.getData("text/plain");
   let card = document.getElementById(cardId);
-  console.log("contenedorInicial", mazos[contenedorInicial.id]);
+  // console.log("contenedorInicial", mazos[contenedorInicial.id]);
   setContador(
     contadores[`contador_${contenedorInicial.id}`],
     mazos[contenedorInicial.id].length
   );
   if (event.target.id.includes("receptor")) {
-    console.log(event.target.id);
+    // console.log(event.target.id);
 
     let lastCard = event.target.lastElementChild;
-    console.log(lastCard);
+    // console.log(lastCard);
     // Obtener el z-index de la última carta
     let lastCardIndex = lastCard ? parseInt(lastCard.style.zIndex, 10) : 0;
     // Aumentar el z-index de la carta arrastrada
@@ -356,7 +375,7 @@ function drop(event) {
         card.style.left = 25 + "px";
         card.style.top = 25 + "px";
         mazos[event.target.id].push(cardId);
-        console.log(mazos[event.target.id]);
+        // console.log(mazos[event.target.id]);
         event.target.appendChild(card);
         setContador(
           contadores[`contador_${event.target.id}`],
@@ -369,7 +388,7 @@ function drop(event) {
           contadores[`contador_${event.target.id}`],
           mazos[event.target.id].length
         );
-        console.log(mazos.inicial);
+        // console.log(mazos.inicial);
       }
     }
   } else {
@@ -392,7 +411,7 @@ function drop(event) {
         card.style.left = 25 + "px";
         card.style.top = 25 + "px";
         mazos[divContenedor.id].push(cardId);
-        console.log(mazos[divContenedor.id]);
+        // console.log(mazos[divContenedor.id]);
         divContenedor.appendChild(card);
         setContador(
           contadores[`contador_${divContenedor.id}`],
@@ -405,7 +424,7 @@ function drop(event) {
           contadores[`contador_${divContenedor.id}`],
           mazos[divContenedor.id].length
         );
-        console.log(mazos.inicial);
+        // console.log(mazos.inicial);
       }
     }
   }
@@ -481,11 +500,11 @@ function revisarRestriciones(ultimoElemento, elementoEntrante) {
   let ultimoElementoNumero = ultimoElemento.getAttribute("data-numero");
 
   if (ultimoElemento.nodeName.toLowerCase() == "img") {
-    console.log("ultimoElementoNumero", ultimoElementoNumero);
-    console.log("ultimoElementoPalo", ultimoElementoPalo);
-    console.log("cardPalo", cardPalo);
-    console.log("cardNumero", cardNumero);
-    console.log(restricciones[ultimoElementoPalo].indexOf(cardPalo) == -1);
+    // console.log("ultimoElementoNumero", ultimoElementoNumero);
+    // console.log("ultimoElementoPalo", ultimoElementoPalo);
+    // console.log("cardPalo", cardPalo);
+    // console.log("cardNumero", cardNumero);
+    // console.log(restricciones[ultimoElementoPalo].indexOf(cardPalo) == -1);
     return (
       ultimoElementoNumero - 1 == cardNumero &&
       restricciones[ultimoElementoPalo].indexOf(cardPalo) == -1
