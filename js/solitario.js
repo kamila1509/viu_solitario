@@ -362,7 +362,6 @@ function drop(event) {
   } else {
     //en caso el elmento target sea la carta dentro del div receptor
     let divContenedor = document.getElementById(event.target.id).parentElement;
-
     let lastCard = divContenedor.lastElementChild;
     // Obtener el z-index de la última carta
     let lastCardIndex = lastCard ? parseInt(lastCard.style.zIndex, 10) : 0;
@@ -379,7 +378,6 @@ function drop(event) {
         card.style.left = 25 + "px";
         card.style.top = 25 + "px";
         mazos[divContenedor.id].push(cardId);
-        // console.log(mazos[divContenedor.id]);
         divContenedor.appendChild(card);
         setContador(
           contadores[`contador_${divContenedor.id}`],
@@ -392,7 +390,6 @@ function drop(event) {
           contadores[`contador_${divContenedor.id}`],
           mazos[divContenedor.id].length
         );
-        // console.log(mazos.inicial);
       }
     }
   }
