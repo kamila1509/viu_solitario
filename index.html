@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html lang="es">
+  <head>
+    <title>Solitario VIU</title>
+    <link rel = "icon" href = "imagenes/viu.png" type = "image/x-icon"> <meta charset="utf-8" />
+    <link 
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" 
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/solitario.css" />
+
+
+  </head>
+  <body>
+
+    <!-- MENU DE NAVEGACION -->
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <button 
+          class="navbar-toggler" 
+          type="button" 
+          data-bs-toggle="collapse" 
+          data-bs-target="#navbarSupportedContent" 
+          aria-controls="navbarSupportedContent" 
+          aria-expanded="false" 
+          aria-label="Toggle navigation"
+        >
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent ">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0  ">
+              <li class="nav-item">
+                <a 
+                  href="#info"
+                  class="nav-link  text-light "
+                  data-bs-toggle="modal" data-bs-target="#infoModal"
+                  aria-current="page">
+                  Asignatura
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Configuración
+              </a>
+              <ul class="dropdown-menu text-center">
+                <li><a class="dropdown-item" >Cartas a repartir</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li onclick="functionNumCards(2)"><a class="NumCards" href="#">2</a></li><li><hr class="dropdown-divider"></li>
+                <li onclick="functionNumCards(3)"><a class="NumCards" href="#">3</a></li><li><hr class="dropdown-divider"></li>
+                <li onclick="functionNumCards(4)"><a class="NumCards" href="#">4</a></li><li><hr class="dropdown-divider"></li>
+                <li onclick="functionNumCards(5)"><a class="NumCards" href="#">5</a></li><li><hr class="dropdown-divider"></li>
+                <li onclick="functionNumCards(6)"><a class="NumCards" href="#">6</a></li><li><hr class="dropdown-divider"></li>
+                <li onclick="functionNumCards(7)"><a class="NumCards" href="#">7</a></li><li><hr class="dropdown-divider"></li>
+                <li onclick="functionNumCards(8)"><a class="NumCards" href="#">8</a></li><li><hr class="dropdown-divider"></li>
+                <li onclick="functionNumCards(9)"><a class="NumCards" href="#">9</a></li><li><hr class="dropdown-divider"></li>
+                <li onclick="functionNumCards(10)"><a class="NumCards" href="#">10</a></li><li><hr class="dropdown-divider"></li>
+                <li onclick="functionNumCards(11)"><a class="NumCards" href="#">11</a></li><li><hr class="dropdown-divider"></li>
+                <li onclick="functionNumCards(12)"><a class="NumCards" href="#">12</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+                <a 
+                  href="#Ayuda"
+                  class="nav-link  text-light "
+                  data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  aria-current="page">
+                   Ayuda
+                </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- PANTALLA MODAL DE TERMINACIÓN DE PARTIDA-->
+    <div class="central flex-column">
+      <div id="modal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Juego Terminado</h5>
+            </div>
+            <div class="modal-body">
+              <p id="tiempo_final">Tiempo:</p>
+              <p id="movimientos_final">Movimientos:</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="cerrar-modal" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button type="button" id="reiniciar" class="btn btn-primary">Empezar de Nuevo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Título principal -->
+      <div class="container ">
+        <div class="container flex-row center align-items-center">
+          <h1 id="titulo">Juego del Solitario </h1>
+          <a href="https://www.universidadviu.com/es/">
+            <img href="https://www.universidadviu.com/es/" class="rounded"
+              width="240"
+              height="120"
+              loading="lazy"
+              src="imagenes/logoVIU.png"
+              alt="logo_viu"
+            />
+          </a>
+        </div>
+      </div>
+
+
+
+      <!-- En la siguientes líneas se indicará el tiempo transcurrido y la cantidad
+				de movimientos que se han hecho hasta el momento. Estos números se 
+				indicarán en los span internos -->
+      <h2 id="marcadores">
+        <span class="text-light">Tiempo: <span id="contador_tiempo"></span></span>
+        <span style="display: inline-block; width: 200px"></span>
+        <span class="text-light"
+          >Movimientos: 0<span id="contador_movimientos" class=""></span
+        ></span>
+      </h2>
+
+      <!-- La "mesa" contendrá los 6 tapetes. En la parte superior dos de ellos 
+				y en la parte inferior los cuatro restantes. Los contadores de los
+				mazos de cartas de cada tapete están indicados oportunamente dentro
+				de elementos span -->
+      <div id="mesa">
+        <div class="tapetes_superiores">
+          <div id="inicial" class="tapete rounded">
+            <span id="contador_inicial" class="contador"></span>
+          </div>
+          <div id="sobrantes_receptor" class="tapete rounded">
+            <span id="contador_sobrantes_receptor" class="contador"></span>
+          </div>
+        </div>
+        <div id="receptor1" class="tapete receptor rounded">
+          <span id="contador_receptor1" class="contador"></span>
+        </div>
+        <div id="receptor2" class="tapete receptor rounded">
+          <span id="contador_receptor2" class="contador"></span>
+        </div>
+        <div id="receptor3" class="tapete receptor rounded">
+          <span id="contador_receptor3" class="contador"></span>
+        </div>
+        <div id="receptor4" class="tapete receptor rounded" >
+          <span id="contador_receptor4" class="contador"></span>
+        </div>
+      </div>
+
+      <!-- Botón de reset que reinicia todo: partida, contadores de tiempo, de movimientos, ... -->
+      <button id="reset" onclick="reiniciar()" class="btn btn-danger">
+        Reiniciar
+      </button>
+    </div>
+
+    <!-- CUADRO MODAL GENERADO PARA MOSTRAR UNA PANTALLA DE AYUDA -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header ">
+            <h1 class="modal-title fs-5 " id="exampleModalLabel">Funcionamiento Juego del Solitario</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center">
+            <!-- <a href="utils/Actividad1.pdf" target="_blank">Actividad 1.pdf</a>     -->
+            <a href=" https://www.dropbox.com/scl/fi/r1zf7hz3zh6d28rosas48/Actividad1.pdf?rlkey=9z8qyqvb86zlxa0xt60dg5guj&dl=0" target="_blank">Actividad 1.pdf</a>  
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary  mx-auto " data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CUADRO MODAL GENERADO PARA MOSTRAR UNA PANTALLA DE INFORMACION DE LA ASIGNATURA -->
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="infoModalLabel">Información Asignatura</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Actividad 1: HTML+CSS+JavaScript
+            </div>
+            <div class="modal-body viu"><strong>05MASW</strong></div>
+            <div class="modal-body">DESARROLLO DE APLICACIONES WEB II: LADO DEL CLIENTE (FRONT-END) Y MULTIMEDIA</div>
+            <hr class="modal-divider"></li>
+            <div class="modal-body">Profesor: </div>
+            <div class="modal-body">-<strong>Ismael de Fez Lava</strong></div>           
+            <div class="modal-body">Alumnos: </div>
+            <div class="modal-body">-<strong>Camila Micaela Urquizo Suca</strong></div>
+            <div class="modal-body">-<strong>Alejandro Vázquez Menéndez</strong></div>
+            <div class="modal-body">-<strong>David Lima Granada</strong></div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+  <script type="text/javascript" src="js/solitario.js"></script>
+</html>
