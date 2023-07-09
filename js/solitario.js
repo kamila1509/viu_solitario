@@ -452,6 +452,22 @@ function removerCartasSobrantesAlReiniciarNumCartas() {
   imagenes.forEach(function (imagen) {
     imagen.remove();
   });
+  imagenes = tapeteReceptor1.querySelectorAll("img");
+  imagenes.forEach(function (imagen) {
+    imagen.remove();
+  });
+  imagenes = tapeteReceptor2.querySelectorAll("img");
+  imagenes.forEach(function (imagen) {
+    imagen.remove();
+  });
+  imagenes = tapeteReceptor3.querySelectorAll("img");
+  imagenes.forEach(function (imagen) {
+    imagen.remove();
+  });
+  imagenes = tapeteReceptor4.querySelectorAll("img");
+  imagenes.forEach(function (imagen) {
+    imagen.remove();
+  });
 }
 
 
