@@ -134,7 +134,6 @@ function comenzarJuego() {
       numeros.push(i);
     }
   }
-  console.log("numeros...",numeros.length);
   
    // Barajar y dejar mazoInicial en tapete inicial
   cargarTapeteInicial(numeros);
@@ -210,15 +209,7 @@ function barajar(mazo) {
   return mazo;
 }
 
-// function dividirArrayEnMitad(array) {
-//   const longitud = array.length;
-//   const puntoMedio = Math.floor(longitud / 2);
 
-//   const primeraMitad = array.slice(0, puntoMedio);
-//   const segundaMitad = array.slice(puntoMedio);
-
-//   return [primeraMitad, segundaMitad];
-// }
 function createCard(combinacion) {
   let card = document.createElement("img");
   card.style.position = "absolute";
@@ -255,8 +246,6 @@ function cargarTapeteInicial(numeros) {
     let card = createCard(combinacion);
     card.style.top = index * 5 + "px";
     card.style.left = index * 5 + "px";
-    // console.log(combinacion)
-    // console.log(index)
     card.draggable = index === barajaInicial.length - 1
     card.setAttribute("data-palo", combinacion.split("-")[1]);
     card.setAttribute("data-numero", combinacion.split("-")[0]);
@@ -299,24 +288,19 @@ function setEvents(containers) {
 
 // Función para el evento dragstart
 function dragStart(event) {
-  // console.log("dragStart");
   event.dataTransfer.setData("text/plain", event.target.id);
-  // console.log(event.currentTarget);
   contenedorInicial = document.getElementById(event.target.id).parentElement;
-  // console.log("dragStart", contenedorInicial);
   event.currentTarget.classList.add("dragging");
 }
 
 // Función para el evento dragenter
 function dragEnter(event) {
   event.preventDefault();
-  // console.log("dragEnter");
   event.currentTarget.classList.add("hovered");
   event.target.classList.add("drag-over");
 }
 // Función para el evento dragover
 function dragOver(event) {
-  // console.log("dragOver");
   event.preventDefault();
 }
 
@@ -329,12 +313,10 @@ function dragLeave(event) {
 }
 // Función para el evento dragend
 function dragEnd(event) {
-  // console.log("dragEnd");
   event.target.classList.remove("dragging");
 }
 // Función para el evento dragleave
 function dragLeave(event) {
-  // console.log("dragLeave");
   event.target.classList.remove("drag-over");
 }
 
@@ -344,16 +326,12 @@ function drop(event) {
   event.target.classList.remove("drag-over");
   let cardId = event.dataTransfer.getData("text/plain");
   let card = document.getElementById(cardId);
-  // console.log("contenedorInicial", mazos[contenedorInicial.id]);
   setContador(
     contadores[`contador_${contenedorInicial.id}`],
     mazos[contenedorInicial.id].length
   );
   if (event.target.id.includes("receptor")) {
-    // console.log(event.target.id);
-
     let lastCard = event.target.lastElementChild;
-    // console.log(lastCard);
     // Obtener el z-index de la última carta
     let lastCardIndex = lastCard ? parseInt(lastCard.style.zIndex, 10) : 0;
     // Aumentar el z-index de la carta arrastrada
@@ -372,7 +350,6 @@ function drop(event) {
         card.style.left = 25 + "px";
         card.style.top = 25 + "px";
         mazos[event.target.id].push(cardId);
-        // console.log(mazos[event.target.id]);
         event.target.appendChild(card);
         setContador(
           contadores[`contador_${event.target.id}`],
@@ -385,7 +362,6 @@ function drop(event) {
           contadores[`contador_${event.target.id}`],
           mazos[event.target.id].length
         );
-        // console.log(mazos.inicial);
       }
     }
   } else {
@@ -497,11 +473,6 @@ function revisarRestriciones(ultimoElemento, elementoEntrante) {
   let ultimoElementoNumero = ultimoElemento.getAttribute("data-numero");
 
   if (ultimoElemento.nodeName.toLowerCase() == "img") {
-    // console.log("ultimoElementoNumero", ultimoElementoNumero);
-    // console.log("ultimoElementoPalo", ultimoElementoPalo);
-    // console.log("cardPalo", cardPalo);
-    // console.log("cardNumero", cardNumero);
-    // console.log(restricciones[ultimoElementoPalo].indexOf(cardPalo) == -1);
     return (
       ultimoElementoNumero - 1 == cardNumero &&
       restricciones[ultimoElementoPalo].indexOf(cardPalo) == -1
