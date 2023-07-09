@@ -306,7 +306,6 @@ function dragOver(event) {
 
 // Función para el evento dragleave
 function dragLeave(event) {
-  // console.log("dragLeave");
   event.currentTarget.classList.remove("hovered");
 
   event.target.classList.remove("drag-over");
@@ -314,10 +313,6 @@ function dragLeave(event) {
 // Función para el evento dragend
 function dragEnd(event) {
   event.target.classList.remove("dragging");
-}
-// Función para el evento dragleave
-function dragLeave(event) {
-  event.target.classList.remove("drag-over");
 }
 
 // Función para el evento drop
